@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+.hidden {
+    display:none;
+}
+
+body {
+    margin: auto;
+    max-width: 600px;
+    font-family: 'roboto', sans-serif;
+}
+
+form {
+    padding-top: 50px;
+}
+
+li {
+    list-style: none;
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+}
