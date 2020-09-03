@@ -6,19 +6,21 @@
     <title>API Capstone</title>
     <link rel="stylesheet" href="index.css">
 </head>
-<body>    
+<body>
+    <div>  
     <form class="search">
         <label for="searchTerm">Please enter a term to search: </label>
         <input type="text" id="js-searchfield" required>
         <input type="submit" value="Search">
     </form>
-    <p id="js-error-message" class="error-message"></p>
-    <section class="hidden">
-        <ul class="youtube-search-results"></ul>
-    </section>
-    <section class="hidden">
-        <p class="wiki-search-results"></p>
-    </section>
+    </div>  
+    <div><p id="js-error-message" class="error-message"></p></div>
+    <div class="group hidden">
+        <div class="results"><ul class="js-youtube-results"></ul></div>
+    </div>
+    <div class="group hidden">
+        <div class="results"><p class="js-wiki-results"></p></div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="index.js"></script>
 </body>

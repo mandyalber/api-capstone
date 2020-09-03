@@ -82,7 +82,10 @@ function getWikiResults (searchTerm){
         action: 'query',     
         format: 'json',
         origin: '*',
-        titles: searchTerm        
+        prop: 'extracts',
+        titles: searchTerm,
+        indexpageids: 1,
+        exchars: 2000,       
     }
 
     const queryString = formatQueryParams(params)
@@ -116,11 +119,11 @@ function displayYoutubeResults(youtubeResponseJson){
                 <p class="description">Description: ${youtubeResponseJson.items[i].snippet.description}</p>
                 <p class="link">Link: <a href=""></a></p>
             </li>`)
-     console.log(videos)
+     
     }
 
-    $('.youtube-search-results').empty().append(videos)
-    $('section').removeClass('hidden')
+    $('.js-youtube-results').empty().append(videos)
+    $('div').removeClass('hidden')
 
 }
 
@@ -128,10 +131,17 @@ function displayYoutubeResults(youtubeResponseJson){
 function displayWikiResults(wikiResponseJson){
     console.log('Wikipedia JSON response is: ')
     console.log(wikiResponseJson)
+    var pageId = wikiResponseJson.query.pageids[0]
+    let wikiHtml = ""
+    
+      
+    wikiHtml += `<h3>${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].title}</h3><p>${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].extract}</p>`
 
-    let wikiHtml = `<li>test</li>`
-    ('wiki-search-results').empty().append(wikiHtml)
-    $('section').removeClass('hidden')
+    console.log(pageId)
+    
+    //console.log("title is: " + wikiHtml)
+    $('.js-wiki-results').empty().append(wikiHtml)
+    $('div').removeClass('hidden')
 }
 
 
