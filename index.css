@@ -8,7 +8,7 @@
 
 body {
     margin: auto;
-    max-width: 600px;
+    max-width: 700px;   
     font-family: 'roboto', sans-serif;
 }
 
@@ -20,6 +20,10 @@ li {
     list-style: none;
 }
 
+img {
+    width: 100%;
+}
+
 .group {
     margin: auto;
     display: flex;
@@ -27,6 +31,8 @@ li {
 }
 
 .results {
-    flex: 2;
+    flex: 2;    
     border: 1px solid black;
+    padding: 5%;
+    margin-right: 2%;
 }

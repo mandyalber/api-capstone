@@ -14,12 +14,21 @@
         <input type="submit" value="Search">
     </form>
     </div>  
-    <div><p id="js-error-message" class="error-message"></p></div>
+    <div></p></div>
     <div class="group hidden">
-        <div class="results"><ul class="js-youtube-results"></ul></div>
-    </div>
-    <div class="group hidden">
-        <div class="results"><p class="js-wiki-results"></p></div>
+        <div class="results">
+            <h2>YouTube Results</h2>
+            <div class="js-youtube-results">
+                <p id="js-youtube-error" class="error-message"></p>
+                <ul class="js-youtube-list"></ul>
+            </div>            
+        </div>    
+        <div class="results">
+            <h2>Wikipedia Results</h2>            
+            <div class="js-wiki-results">
+                <p id="js-wiki-error" class="error-message"></p>
+            </div>            
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="index.js"></script>

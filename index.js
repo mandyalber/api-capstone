@@ -1,23 +1,15 @@
 /*
 1. users should be able to clearly understand what the app is asking them to do - high
 
+
+10. users should be presented with a manageable amount of results - medium
+7. users should get a link to access more results on the api's originating sites - medium
 2. users should be able to enter a search term without worrying about punctuation, case, etc - medium
 
-3. users should understand where the results they are seeing came from - high
 
 4. users should be shown a message if their term is not found and prompted with ideas to fix search term - low
-
-5. users should be told if there was an error accessing the data - high
- 
-6. users should be able to make a new search and have the previous search history cleared - high
-
-7. users should get a link to access more results on the api's originating sites - medium
-
 8. users should be scrolled down to results with a link to return to top - low
-
 9. users should be prompted with examples to know what to enter - low
-
-10. users should be presented with a manageable amount of results and be able to go to the origin for more - medium
 */
 
 //users should be able to enter a search term
@@ -25,10 +17,11 @@ function handleSearchClicked (){
     $('.search').submit(event => {
         event.preventDefault()
         let searchTerm = $('#js-searchfield').val()
-        $('#js-searchfield').val('')
+        
         console.log('search term is: ' + searchTerm)
         getYoutubeResults(searchTerm)
         getWikiResults(searchTerm)
+        //$('form')[0].reset();
     })
 }
 
@@ -42,10 +35,10 @@ function formatQueryParams(params) {
 //get results from youtube
 function getYoutubeResults (searchTerm){
     const searchURL = 'https://www.googleapis.com/youtube/v3/search'
-    const apiKey = 'AIzaSyCMXiIyZ8hCP9ETbcAQqe1QQaWpHerhTBk'
+    const apiKey = 'AIzaSyCRCQ5w0o8O1bStec0UI5nQuCTROFkgF1s'
     const params = {        
         key: apiKey,
-        q: searchTerm,
+        q: 'What is ' + searchTerm,
         part: 'snippet',
         type: 'video',
         maxResults: 5,
@@ -66,8 +59,9 @@ function getYoutubeResults (searchTerm){
         throw new Error(response.statusText)
     })
     .then(youtubeResponseJson => displayYoutubeResults(youtubeResponseJson))
-    .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`)
+    .catch(err => { 
+        console.log(err)
+        $('#js-youtube-error').text(`Oops, something went wrong. Please try again later.`)
     })
     
 
@@ -82,10 +76,12 @@ function getWikiResults (searchTerm){
         action: 'query',     
         format: 'json',
         origin: '*',
-        prop: 'extracts',
+        prop: 'extracts|pageimages',
         titles: searchTerm,
         indexpageids: 1,
-        exchars: 2000,       
+        exchars: 1200, 
+        piprop: 'name|thumbnail|original',
+        pithumbsize: 250      
     }
 
     const queryString = formatQueryParams(params)
@@ -102,7 +98,7 @@ function getWikiResults (searchTerm){
     })
     .then(wikiResponseJson => displayWikiResults(wikiResponseJson))
     .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`)
+        $('#js-wiki-error').text(`Oops, something went wrong: ${err.message}`)
     })
     
 }
@@ -115,15 +111,23 @@ function displayYoutubeResults(youtubeResponseJson){
     //use a for loop to append to a ul 
     for (let i = 0; i < youtubeResponseJson.items.length; i++){
         videos.push(`
-                <li><h3>${youtubeResponseJson.items[i].snippet.title}</h3>
-                <p class="description">Description: ${youtubeResponseJson.items[i].snippet.description}</p>
-                <p class="link">Link: <a href=""></a></p>
-            </li>`)
-     
+            <li>
+            <div class="video">
+                <a href="https://www.youtube.com/watch?v=${youtubeResponseJson.items[i].id.videoId}" target="_blank">
+                    <img class="thumbnail" src="${youtubeResponseJson.items[i].snippet.thumbnails.medium.url}">
+                    <h3>${youtubeResponseJson.items[i].snippet.title}</h3>
+                    <p class="description">${youtubeResponseJson.items[i].snippet.description}</p>
+                </a>
+            </div>                
+            </li>`)    
     }
-
-    $('.js-youtube-results').empty().append(videos)
+    
+    $('.js-youtube-list').empty().append(videos)
+    $('.js-youtube-results').append('<hr><p><a href="https://www.youtube.com/results?search_query=' + $('#js-searchfield').val() + 
+    `" target="_blank">See more on YouTube</a></p>`)
+    
     $('div').removeClass('hidden')
+    
 
 }
 
@@ -135,7 +139,13 @@ function displayWikiResults(wikiResponseJson){
     let wikiHtml = ""
     
       
-    wikiHtml += `<h3>${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].title}</h3><p>${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].extract}</p>`
+    wikiHtml += `
+        <img src="${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].thumbnail.source}" alt="${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].pageimage}"/>
+        <h3>${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].title}</h3>
+        <p>${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].extract}</p>
+        <hr/>
+        <p><a href="https://en.wikipedia.org/wiki/${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].title}" target="_blank">See more on Wikipedia</a></p>
+        `
 
     console.log(pageId)
     
