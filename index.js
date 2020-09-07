@@ -1,53 +1,52 @@
 /*
-1. users should be able to clearly understand what the app is asking them to do - high
-
-
-10. users should be presented with a manageable amount of results - medium
-7. users should get a link to access more results on the api's originating sites - medium
-2. users should be able to enter a search term without worrying about punctuation, case, etc - medium
-
-
-4. users should be shown a message if their term is not found and prompted with ideas to fix search term - low
 8. users should be scrolled down to results with a link to return to top - low
+    //implement this as part of styling
 9. users should be prompted with examples to know what to enter - low
+    //implement this as part of polishing app 
 */
 
-//users should be able to enter a search term
+//handle users clicking the "Search" button
 function handleSearchClicked (){
     $('.search').submit(event => {
         event.preventDefault()
-        let searchTerm = $('#js-searchfield').val()
-        
+        let searchTerm = $('#js-searchfield').val()        
         console.log('search term is: ' + searchTerm)
+        clearSearchResults()
         getYoutubeResults(searchTerm)
-        getWikiResults(searchTerm)
-        //$('form')[0].reset();
+        getWikiResults(searchTerm)        
     })
 }
 
-//format params
+//clear results from any prior searches
+function clearSearchResults(){
+    $('.js-youtube-results').empty()
+    $('.js-wiki-results').empty()
+    $('form')[0].reset();
+}
+
+//format parameters
 function formatQueryParams(params) {
-    const queryItems = Object.keys(params)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    const queryItems = Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
     return queryItems.join('&');
 }
 
-//get results from youtube
+//fetch results from YouTube's API
 function getYoutubeResults (searchTerm){
-    const searchURL = 'https://www.googleapis.com/youtube/v3/search'
-    const apiKey = 'AIzaSyCRCQ5w0o8O1bStec0UI5nQuCTROFkgF1s'
+    const baseURL = 'https://www.googleapis.com/youtube/v3/search'
+    const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
+
     const params = {        
         key: apiKey,
         q: 'What is ' + searchTerm,
         part: 'snippet',
         type: 'video',
-        maxResults: 5,
+        maxResults: 4,
         order: 'Relevance',
         type: 'video'
     }
 
     const queryString = formatQueryParams(params)
-    const url = searchURL + '?' + queryString
+    const url = baseURL + '?' + queryString
 
     console.log('YouTube search url is: ' + url);
 
@@ -58,34 +57,33 @@ function getYoutubeResults (searchTerm){
         }
         throw new Error(response.statusText)
     })
-    .then(youtubeResponseJson => displayYoutubeResults(youtubeResponseJson))
+    .then(youtubeResponseJson => displayYoutubeResults(youtubeResponseJson, searchTerm))
     .catch(err => { 
         console.log(err)
-        $('#js-youtube-error').text(`Oops, something went wrong. Please try again later.`)
+        $('#js-youtube-error').text(`Oops, something went wrong. ${err.message}. Please try again later.`)
     })
-    
-
 }
 
-
-//get results from wikipedia
+//fetch results from Wikipedia's API
 function getWikiResults (searchTerm){
 
-    const searchURL = 'https://en.wikipedia.org/w/api.php'
+    const baseURL = 'https://en.wikipedia.org/w/api.php'
     const params = {   
         action: 'query',     
         format: 'json',
         origin: '*',
         prop: 'extracts|pageimages',
         titles: searchTerm,
+        redirects: 1,
         indexpageids: 1,
         exchars: 1200, 
+        exsectionformat: 'plain',
         piprop: 'name|thumbnail|original',
         pithumbsize: 250      
     }
 
     const queryString = formatQueryParams(params)
-    const url = searchURL + '?' + queryString
+    const url = baseURL + '?' + queryString
 
     console.log('Wiki search url is: ' + url);
 
@@ -98,59 +96,74 @@ function getWikiResults (searchTerm){
     })
     .then(wikiResponseJson => displayWikiResults(wikiResponseJson))
     .catch(err => {
-        $('#js-wiki-error').text(`Oops, something went wrong: ${err.message}`)
-    })
-    
+        $('#js-wiki-error').text(`Oops, something went wrong. ${err.message}. Please try again later.`)
+    })    
 }
 
-//display youtube results
-function displayYoutubeResults(youtubeResponseJson){
+//display YouTube results
+function displayYoutubeResults(youtubeResponseJson, searchTerm){
     console.log('YouTube JSON response is: ')
     console.log(youtubeResponseJson)
-    let videos = []
-    //use a for loop to append to a ul 
-    for (let i = 0; i < youtubeResponseJson.items.length; i++){
-        videos.push(`
-            <li>
-            <div class="video">
-                <a href="https://www.youtube.com/watch?v=${youtubeResponseJson.items[i].id.videoId}" target="_blank">
-                    <img class="thumbnail" src="${youtubeResponseJson.items[i].snippet.thumbnails.medium.url}">
-                    <h3>${youtubeResponseJson.items[i].snippet.title}</h3>
-                    <p class="description">${youtubeResponseJson.items[i].snippet.description}</p>
-                </a>
-            </div>                
-            </li>`)    
+    console.log(searchTerm)
+    if (youtubeResponseJson.items.length === 0){
+        console.log('no results')
+        $('.js-youtube-results').append(
+            `<p>Sorry, no YouTube videos were found. Please check your spelling and try again.</p><p>Or, you can try browsing <a href="https://www.google.com/search?q=${searchTerm}" target="_blank">Google&rsquo;s search results</a></p>`
+        )
     }
+    else {
+            
+        let videos = []      
+        for (let i = 0; i < youtubeResponseJson.items.length; i++){
+            videos.push(`
+                    <div class="video-item">
+                        <a href="https://www.youtube.com/watch?v=${youtubeResponseJson.items[i].id.videoId}" target="_blank">
+                        <img class="thumbnail" src="${youtubeResponseJson.items[i].snippet.thumbnails.medium.url}"></a>
+                        <h3>${youtubeResponseJson.items[i].snippet.title}</h3>
+                        <p class="description">${youtubeResponseJson.items[i].snippet.description}</p>
+                    </div>`)    
+        }
     
-    $('.js-youtube-list').empty().append(videos)
-    $('.js-youtube-results').append('<hr><p><a href="https://www.youtube.com/results?search_query=' + $('#js-searchfield').val() + 
-    `" target="_blank">See more on YouTube</a></p>`)
-    
-    $('div').removeClass('hidden')
-    
-
+        $('.js-youtube-results').append(videos)
+        $('.yt').append(`<hr><p class="js-youtube-redirect"><a href="https://www.youtube.com/results?search_query=${searchTerm}" target="_blank">See more on YouTube</a></p>`)    
+        $('div').removeClass('hidden')
+    }
 }
 
-//display wiki results
+//display Wiki results
 function displayWikiResults(wikiResponseJson){
     console.log('Wikipedia JSON response is: ')
     console.log(wikiResponseJson)
-    var pageId = wikiResponseJson.query.pageids[0]
+
+    let pageId = wikiResponseJson.query.pageids[0]
+    let title = wikiResponseJson.query.pages[pageId].title
+    let extract = wikiResponseJson.query.pages[pageId].extract
     let wikiHtml = ""
     
-      
-    wikiHtml += `
-        <img src="${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].thumbnail.source}" alt="${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].pageimage}"/>
-        <h3>${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].title}</h3>
-        <p>${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].extract}</p>
-        <hr/>
-        <p><a href="https://en.wikipedia.org/wiki/${wikiResponseJson.query.pages[wikiResponseJson.query.pageids[0]].title}" target="_blank">See more on Wikipedia</a></p>
-        `
+    if (pageId === '-1') {
+        wikiHtml += `<p>Sorry, no Wikipedia page was found. Please check your spelling and try again.</p><p>Or, you can try browsing <a href="https://www.google.com/search?q=${title}" target="_blank">Google&rsquo;s search results</a></p>`
+    }
+    else {
+        if (wikiResponseJson.query.pages[pageId].thumbnail) {
+            console.log('thumbnail is available')
+            wikiHtml += `
+                <img class="wiki-img" src="${wikiResponseJson.query.pages[pageId].thumbnail.source}" alt="${wikiResponseJson.query.pages[pageId].pageimage}"/>
+                <h3 class="wiki-title">${title}</h3>
+                <div class="wiki-extract">${extract}</div>
+                <hr/>
+                <p class="wiki-redirect"><a href="https://en.wikipedia.org/wiki/${title}" target="_blank">See more on Wikipedia</a></p>`
+        }
+        else {
+            console.log('no thumbnail')
+            wikiHtml += `            
+                <h3 class="wiki-title">${title}</h3>
+                <div class="wiki-extract">${extract}</div>
+                <hr/>
+                <p class="wiki-redirect"><a href="https://en.wikipedia.org/wiki/${title}" target="_blank">See more on Wikipedia</a></p>`
+        }
+    }
 
-    console.log(pageId)
-    
-    //console.log("title is: " + wikiHtml)
-    $('.js-wiki-results').empty().append(wikiHtml)
+    $('.js-wiki-results').append(wikiHtml)
     $('div').removeClass('hidden')
 }
 
