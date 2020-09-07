@@ -8,31 +8,54 @@
 
 body {
     margin: auto;
-    max-width: 700px;   
+    max-width: 900px;   
     font-family: 'roboto', sans-serif;
+    background-color: darkslategrey;
 }
 
-form {
-    padding-top: 50px;
-}
-
-li {
-    list-style: none;
+header {
+   padding: 50px 10px;
+   color: white; 
 }
 
 img {
     width: 100%;
+    border-radius: 10px;;
 }
 
-.group {
-    margin: auto;
+.group, .video-group {
+    
     display: flex;
-    flex-direction: row;
-}
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
+  
+.item, .video-item {
+    flex: 1;
+    margin: 10px;
+    padding:2%;
+    border-radius:5px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    background-color: white;
+  }
 
-.results {
-    flex: 2;    
-    border: 1px solid black;
-    padding: 5%;
-    margin-right: 2%;
-}
+  
+  /* Groups & Items  (Desktop) */
+  
+  @media all and (min-width: 900px) {
+  
+    .group, .video-group {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }  
+
+    .video-item {
+        min-width: 150px;
+        padding: 5px;
+    }
+
+    .video-item p {
+        font-size: 14px;        
+    }
+  }
