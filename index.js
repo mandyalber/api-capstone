@@ -4,6 +4,7 @@
 9. users should be prompted with examples to know what to enter - low
     //implement this as part of polishing app 
 */
+'use strict'
 
 //handle users clicking the "Search" button
 function handleSearchClicked (){
@@ -21,6 +22,7 @@ function handleSearchClicked (){
 function clearSearchResults(){
     $('.js-youtube-results').empty()
     $('.js-wiki-results').empty()
+    $('.js-youtube-redirect').empty()
     $('form')[0].reset();
 }
 
@@ -33,8 +35,8 @@ function formatQueryParams(params) {
 //fetch results from YouTube's API
 function getYoutubeResults (searchTerm){
     const baseURL = 'https://www.googleapis.com/youtube/v3/search'
-    const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
-
+    //const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
+    const apiKey = 'AIzaSyBbufEQj2L_1XcBrqVKtT7pm4kPyRhAGnE'
     const params = {        
         key: apiKey,
         q: 'What is ' + searchTerm,
@@ -55,12 +57,13 @@ function getYoutubeResults (searchTerm){
         if (response.ok) {
         return response.json()
         }
-        throw new Error(response.statusText)
+        throw new Error(response.status)
+        
     })
     .then(youtubeResponseJson => displayYoutubeResults(youtubeResponseJson, searchTerm))
     .catch(err => { 
-        console.log(err)
-        $('#js-youtube-error').text(`Oops, something went wrong. ${err.message}. Please try again later.`)
+        console.log(err.message)
+        $('#js-youtube-error').text(`Oops, something went wrong. ${err.message} error. Please try again later.`)
     })
 }
 
@@ -96,7 +99,7 @@ function getWikiResults (searchTerm){
     })
     .then(wikiResponseJson => displayWikiResults(wikiResponseJson))
     .catch(err => {
-        $('#js-wiki-error').text(`Oops, something went wrong. ${err.message}. Please try again later.`)
+        $('#js-wiki-error').text(`Oops, something went wrong. ${err.message} error. Please try again later.`)
     })    
 }
 
@@ -125,7 +128,7 @@ function displayYoutubeResults(youtubeResponseJson, searchTerm){
         }
     
         $('.js-youtube-results').append(videos)
-        $('.yt').append(`<hr><p class="js-youtube-redirect"><a href="https://www.youtube.com/results?search_query=${searchTerm}" target="_blank">See more on YouTube</a></p>`)    
+        $('.js-youtube-redirect').append(`<hr><p><a href="https://www.youtube.com/results?search_query=${searchTerm}" target="_blank">See more on YouTube</a></p>`)    
         $('div').removeClass('hidden')
     }
 }
