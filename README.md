@@ -2,6 +2,9 @@
 
 This app allows you to search your topic and find results from 2 sources: YouTube and Wikipedia API data
 
+## Link to Live App
+https://mandyalber.github.io/sagasu-app/
+
 ## Screenshots
 
 Search form:
