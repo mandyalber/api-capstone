@@ -13,7 +13,7 @@ function handleSearchClicked (){
         let searchTerm = $('#js-searchfield').val()        
         console.log('search term is: ' + searchTerm)
         //(selector).animate({styles},speed,easing,callback)
-        $('html, body').animate({ scrollTop: $('main').offset().top - 20});
+        $('html, body').animate({ scrollTop: $('main').offset().top - 100});
         clearSearchResults()
         getYoutubeResults(searchTerm)
         getWikiResults(searchTerm)        
@@ -38,7 +38,8 @@ function formatQueryParams(params) {
 function getYoutubeResults (searchTerm){
     const baseURL = 'https://www.googleapis.com/youtube/v3/search'
     //const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
-    const apiKey = 'AIzaSyBbufEQj2L_1XcBrqVKtT7pm4kPyRhAGnE'
+    //const apiKey = 'AIzaSyBbufEQj2L_1XcBrqVKtT7pm4kPyRhAGnE'
+    const apiKey = 'AIzaSyBfUY85nX5tg2xoHLj-QXsxdSLstdVO6OA'
     const params = {        
         key: apiKey,
         q: 'What is ' + searchTerm,

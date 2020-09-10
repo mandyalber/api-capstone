@@ -1,13 +1,16 @@
+/*General Styles*/
+
 * {
     box-sizing: border-box;
 }
 
-/*general styles*/
-
 .hidden {
     display: none;
 }
-body{background-color: #8ed1ef;}
+
+body {
+    background-color: #8ed1ef;
+}
 
 header {      
     background-image: url("images/searching.jpg") ;
@@ -15,10 +18,8 @@ header {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 200px 0px 0px 40px;
-    box-shadow: 5px 5px 5px #3a3939;
-    padding-left: 30%;
-    background-attachment: scroll
+    padding: 10%;
+    box-shadow: 5px 5px 5px #3a3939;    
  }
 
  header h1, h2, label {
@@ -29,6 +30,23 @@ main, .intro-section {
     margin: auto;
     max-width: 900px;       
 }
+
+/*Image Styles*/
+
+img {
+    width: 100%;    
+}
+
+.google-search img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid #a2a9b1 
+}
+
+/*Form Styles*/
 
 form {
     display: flex;
@@ -72,9 +90,7 @@ input[type=submit]:active {
     transform: translateY(1px);
 }
 
-img {
-    width: 100%;    
-}
+/*Link Styles*/
 
 .new-search a:link {
     text-decoration:none;
@@ -85,18 +101,8 @@ img {
 .new-search a:visited {color:black;}
 .new-search a:hover {color:#3a3939;}
 
+/*Flexbox Styles*/
 
-
-.google-search img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    border-radius: 5px;
-    border: 1px solid #a2a9b1 
-}
-
-/*flexbox styles*/
 .group, .video-group {    
     display: flex;
     flex-direction: column;
@@ -113,7 +119,8 @@ img {
     box-shadow: 5px 10px 5px #3a3939;
 }
 
-/*wiki results styles*/
+/*Wiki Results Styles*/
+
 .wiki-heading {
     text-transform: uppercase;
     font-family: 'Linux Libertine','Hoefler Text',Georgia,'Times New Roman',serif;
@@ -150,31 +157,48 @@ img {
     padding: 5px;
 }
 
-/*youtube results styles*/
-.yt-heading{
+/*YouTube Results Styles*/
+
+.yt {
     font-family: 'Roboto','Noto Sans', sans-serif;
+}
+
+.youtube-results {
+    background-color:#f9f9f9;
+}
+
+.video-item {
+    background-color:#f9f9f9;
+    box-shadow: none;
+}
+
+.yt-heading{
+    font-family: inherit;
     border-left: 4px solid #5f6368;
     border-left-color:#ff0000;
     padding: 10px;
-
 }
 
-.yt {
-    font-family: 'Roboto', Arial, sans-serif;
-}
+.yt a:link {
+    font-family: inherit;
+    text-decoration: none;
+    color:#909090;}
+.yt a:visited {color:#909090;}
+.yt a:hover {color: rgb(24, 23, 23);}
   
-  /* flexbox styles (Desktop) */
+/* Flexbox Styles (Desktop) */
   
-  @media all and (min-width: 900px) {
+@media all and (min-width: 900px) {
   
-    header {      
-        height: 700px;
+    header, .intro-section {
+        padding: 100px 0px 0px 100px;
     }
 
     form {
       flex-flow: row wrap;
       align-items: center;
     }
+
     .group, .video-group {
         flex-flow: row wrap;
     }  
@@ -187,4 +211,5 @@ img {
     .video-item p {
         font-size: 14px;        
     }
+
   }
