@@ -9,7 +9,7 @@
 body {
     margin: auto;
     max-width: 900px;   
-    font-family: 'roboto', sans-serif;
+    
     background-color: darkslategrey;
 }
 
@@ -20,7 +20,7 @@ header {
 
 img {
     width: 100%;
-    border-radius: 10px;;
+    
 }
 
 .group, .video-group {
@@ -28,18 +28,67 @@ img {
     display: flex;
     flex-direction: column;
     margin-bottom: 100px;
-  }
+}
   
 .item, .video-item {
     flex: 1;
     margin: 10px;
     padding:2%;
-    border-radius:5px;
     overflow-wrap: break-word;
     word-wrap: break-word;
     background-color: white;
-  }
+    box-shadow: 5px 10px 5px #3a3939;
+}
 
+/*wiki results styles*/
+.wiki-heading {
+    text-transform: uppercase;
+    font-family: 'Linux Libertine','Hoefler Text',Georgia,'Times New Roman',serif;
+    font-weight: 400;
+    line-height: 3.3rem;
+    text-align: center;
+    background-color: #f6f6f6;
+}
+
+.wiki h3 {
+    margin-bottom: 0.25em;
+    padding: 0;
+    font-family: 'Linux Libertine','Georgia','Times',serif;
+    line-height: 1.3;
+}
+
+.wiki p {
+    font-size: 100%;
+    font-family: 'Hoefler Text', sans-serif;
+    font-size: calc(1em * 0.875);
+    line-height: 1.6;
+    margin: 0.5em 0;
+}
+
+.wiki a:link {text-decoration: none;}
+.wiki a:visited {color: #0b0080;}
+.wiki a:hover {text-decoration: underline;}
+.wiki a:active {color: #faa700;}
+
+.wiki-img {
+    border: 1px solid #a2a9b1;
+    border-spacing: 3px;
+    background-color: #f8f9fa;      
+    padding: 5px;
+}
+
+/*youtube results styles*/
+.yt-heading{
+    font-family: 'Roboto','Noto Sans', sans-serif;
+    border-left: 4px solid #5f6368;
+    border-left-color:#ff0000;
+    padding: 10px;
+
+}
+
+.yt {
+    font-family: 'Roboto', Arial, sans-serif;
+}
   
   /* Groups & Items  (Desktop) */
   

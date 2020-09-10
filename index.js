@@ -12,6 +12,8 @@ function handleSearchClicked (){
         event.preventDefault()
         let searchTerm = $('#js-searchfield').val()        
         console.log('search term is: ' + searchTerm)
+        //(selector).animate({styles},speed,easing,callback)
+        $('html, body').animate({ scrollTop: $('main').offset().top - 20});
         clearSearchResults()
         getYoutubeResults(searchTerm)
         getWikiResults(searchTerm)        
@@ -35,8 +37,8 @@ function formatQueryParams(params) {
 //fetch results from YouTube's API
 function getYoutubeResults (searchTerm){
     const baseURL = 'https://www.googleapis.com/youtube/v3/search'
-    //const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
-    const apiKey = 'AIzaSyBbufEQj2L_1XcBrqVKtT7pm4kPyRhAGnE'
+    const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
+    //const apiKey = 'AIzaSyBbufEQj2L_1XcBrqVKtT7pm4kPyRhAGnE'
     const params = {        
         key: apiKey,
         q: 'What is ' + searchTerm,
@@ -150,7 +152,7 @@ function displayWikiResults(wikiResponseJson){
         if (wikiResponseJson.query.pages[pageId].thumbnail) {
             console.log('thumbnail is available')
             wikiHtml += `
-                <img class="wiki-img" src="${wikiResponseJson.query.pages[pageId].thumbnail.source}" alt="${wikiResponseJson.query.pages[pageId].pageimage}"/>
+                <div class="wiki-img"><img src="${wikiResponseJson.query.pages[pageId].thumbnail.source}" alt="${wikiResponseJson.query.pages[pageId].pageimage}"/></div>
                 <h3 class="wiki-title">${title}</h3>
                 <div class="wiki-extract">${extract}</div>
                 <hr/>
