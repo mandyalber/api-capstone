@@ -90,17 +90,6 @@ input[type=submit]:active {
     transform: translateY(1px);
 }
 
-/*Link Styles*/
-
-.new-search a:link {
-    text-decoration:none;
-    color: black;
-    text-shadow: 1px 1px 1px #3a3939;
-    font-size: 20px;
-}
-.new-search a:visited {color:black;}
-.new-search a:hover {color:#3a3939;}
-
 /*Flexbox Styles*/
 
 .group, .video-group {    
@@ -177,6 +166,7 @@ input[type=submit]:active {
     border-left: 4px solid #5f6368;
     border-left-color:#ff0000;
     padding: 10px;
+    text-shadow: none;
 }
 
 .yt a:link {
