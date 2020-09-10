@@ -37,8 +37,8 @@ function formatQueryParams(params) {
 //fetch results from YouTube's API
 function getYoutubeResults (searchTerm){
     const baseURL = 'https://www.googleapis.com/youtube/v3/search'
-    const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
-    //const apiKey = 'AIzaSyBbufEQj2L_1XcBrqVKtT7pm4kPyRhAGnE'
+    //const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
+    const apiKey = 'AIzaSyBbufEQj2L_1XcBrqVKtT7pm4kPyRhAGnE'
     const params = {        
         key: apiKey,
         q: 'What is ' + searchTerm,
@@ -113,7 +113,7 @@ function displayYoutubeResults(youtubeResponseJson, searchTerm){
     if (youtubeResponseJson.items.length === 0){
         console.log('no results')
         $('.js-youtube-results').append(
-            `<p>Sorry, no YouTube videos were found. Please check your spelling and try again.</p><p>Or, you can try browsing <a href="https://www.google.com/search?q=${searchTerm}" target="_blank">Google&rsquo;s search results</a></p>`
+            `<p>Sorry, no YouTube videos were found. Please check your spelling and try again.</p><p>Or, you can try browsing <a href="https://www.google.com/search?q=${searchTerm}" target="_blank">Google&rsquo;s search results</a></p><p class="google-search"><img src="images/google-search.jpg" alt="google-search"></p>`
         )
     }
     else {
@@ -146,7 +146,7 @@ function displayWikiResults(wikiResponseJson){
     let wikiHtml = ""
     
     if (pageId === '-1') {
-        wikiHtml += `<p>Sorry, no Wikipedia page was found. Please check your spelling and try again.</p><p>Or, you can try browsing <a href="https://www.google.com/search?q=${title}" target="_blank">Google&rsquo;s search results</a></p>`
+        wikiHtml += `<p>Sorry, no Wikipedia page was found. Please check your spelling and try again.</p><p>Or, you can try browsing <a href="https://www.google.com/search?q=${title}" target="_blank">Google&rsquo;s search results</a></p><p class="google-search"><img src="images/google-search.jpg" alt="google-search"></p>`
     }
     else {
         if (wikiResponseJson.query.pages[pageId].thumbnail) {

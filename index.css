@@ -2,29 +2,102 @@
     box-sizing: border-box;
 }
 
+/*general styles*/
+
 .hidden {
     display: none;
 }
+body{background-color: #8ed1ef;}
 
-body {
+header {      
+    background-image: url("images/searching.jpg") ;
+    height: 600px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 200px 0px 0px 40px;
+    box-shadow: 5px 5px 5px #3a3939;
+    padding-left: 30%;
+    background-attachment: scroll
+ }
+
+ header h1, h2, label {
+     text-shadow: 1px 1px 1px #3a3939;
+ }
+
+main, .intro-section {
     margin: auto;
-    max-width: 900px;   
-    
-    background-color: darkslategrey;
+    max-width: 900px;       
 }
 
-header {
-   padding: 50px 10px;
-   color: white; 
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+label {
+    font-size: 20px;
+    margin: 5px 10px 5px 0;
+}
+
+input[type=text] {
+    width:200px;
+    padding: 5px;
+    margin: 5px 10px 5px 0;
+    border: 2px solid #ede4de;
+    border-radius:5px;
+    box-shadow: 5px 5px 5px #3a3939;
+}
+
+input[type=submit] {
+    cursor: pointer;
+    font-family:'Roboto', sans-serif;
+    padding: 8px;
+    margin: 5px 10px 5px 0;
+    background-color: #ede4de;
+    width:100px;
+    border:none;
+    border-radius:5px;
+    transition-duration: 0.2s;
+    box-shadow: 5px 5px 5px #3a3939;
+}
+
+input[type=submit]:hover{
+    background-color:#888685;
+}
+
+input[type=submit]:active {
+    box-shadow: 5px 5px 5px #3a3939;
+    transform: translateY(1px);
 }
 
 img {
-    width: 100%;
-    
+    width: 100%;    
 }
 
-.group, .video-group {
-    
+.new-search a:link {
+    text-decoration:none;
+    color: black;
+    text-shadow: 1px 1px 1px #3a3939;
+    font-size: 20px;
+}
+.new-search a:visited {color:black;}
+.new-search a:hover {color:#3a3939;}
+
+
+
+.google-search img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid #a2a9b1 
+}
+
+/*flexbox styles*/
+.group, .video-group {    
     display: flex;
     flex-direction: column;
     margin-bottom: 100px;
@@ -90,13 +163,20 @@ img {
     font-family: 'Roboto', Arial, sans-serif;
 }
   
-  /* Groups & Items  (Desktop) */
+  /* flexbox styles (Desktop) */
   
   @media all and (min-width: 900px) {
   
+    header {      
+        height: 700px;
+    }
+
+    form {
+      flex-flow: row wrap;
+      align-items: center;
+    }
     .group, .video-group {
-      flex-direction: row;
-      flex-wrap: wrap;
+        flex-flow: row wrap;
     }  
 
     .video-item {

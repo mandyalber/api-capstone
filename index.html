@@ -9,15 +9,17 @@
 </head>
 <body>
     <header>
-    <h2>Save time and get results from YouTube and Wikipedia at once!</h2>
-    <h3>Browse videos and articles on your subject in one place!</h3>
-        <div class="search-form">  
-            <form class="search">
-                <label for="js-searchfield">Please enter a term to search: </label>
-                <input type="text" id="js-searchfield" autofocus required>
-                <input type="submit" value="Search">
-            </form>
-        </div>  
+        <div class="intro-section">
+            <h1>Save time and get results from YouTube and Wikipedia at once!</h1>
+            <h2>Browse videos and articles on your subject in one place!</h2>
+                <div class="search-form">  
+                    <form class="search">
+                        <label for="js-searchfield">Please enter a term to search: </label>
+                        <input type="text" id="js-searchfield" required>
+                        <input type="submit" value="Search">
+                    </form>
+                </div>  
+        </div>
     </header>
     <main>    
         <div class="results group">
@@ -33,7 +35,7 @@
                 <p id="js-wiki-error" class="error-message"></p>            
             </div>
         </div>
-        <div class="hidden item">
+        <div class="new-search item hidden">
             <a href="#js-searchfield">New Search</a>
         </div>
     </main>
