@@ -5,10 +5,10 @@ This app allows you to search your topic and find results from 2 sources: YouTub
 ## Screenshots
 
 Search form:
-![search screen](images/search-form-screenshot.png)
+![search screen](https://github.com/mandyalber/sagasu-app/blob/master/images/search-form-screenshot.PNG)
 
 Results pages:
-![results screen](images/results-screenshot.png)
+![results screen](https://github.com/mandyalber/sagasu-app/blob/master/images/results-screenshot.PNG)
 
 ## Built With
 
