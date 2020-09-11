@@ -1,9 +1,3 @@
-/*
-8. users should be scrolled down to results with a link to return to top - low
-    //implement this as part of styling
-9. users should be prompted with examples to know what to enter - low
-    //implement this as part of polishing app 
-*/
 'use strict'
 
 //handle users clicking the "Search" button
@@ -37,8 +31,6 @@ function formatQueryParams(params) {
 //fetch results from YouTube's API
 function getYoutubeResults (searchTerm){
     const baseURL = 'https://www.googleapis.com/youtube/v3/search'
-    //const apiKey = 'AIzaSyAp-YBFuefJjhVDNzu4NWnJ1prDzqsd_dk'
-    //const apiKey = 'AIzaSyBbufEQj2L_1XcBrqVKtT7pm4kPyRhAGnE'
     const apiKey = 'AIzaSyBfUY85nX5tg2xoHLj-QXsxdSLstdVO6OA'
     const params = {        
         key: apiKey,
